@@ -1,24 +1,88 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { HelmetProvider } from 'react-helmet-async';
+import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import Navbar from './components/common/Navbar';
+import ProtectedRoute from './components/common/ProtectedRoute';
+
+// Pages
+import Home from './pages/Home';
+import Explore from './pages/Explore';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
+import CustomerLogin from './pages/auth/CustomerLogin';
+import CustomerRegister from './pages/auth/CustomerRegister';
+import ShopOwnerLogin from './pages/auth/ShopOwnerLogin';
+import ShopOwnerRegister from './pages/auth/ShopOwnerRegister';
+import AdminLogin from './pages/auth/AdminLogin';
+import SecureAdminLogin from './pages/admin/SecureAdminLogin';
+import MessPage from './pages/shop/MessPage';
+import HotelPage from './pages/shop/HotelPage';
+import CafePage from './pages/shop/CafePage';
+
+// Add imports
+import CustomerDashboard from './pages/customer/CustomerDashboard';
+import ShopDashboard from './pages/shopowner/ShopDashboard';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminChatDashboard from './pages/admin/AdminChatDashboard';
+import ShopSetup from './pages/shopowner/ShopSetup';
+import ChatBox from './components/common/ChatBox';
+
+// Placeholder for remaining pages (will create)
+const Cart = () => <div className="container-custom py-8"><h1>Cart Page</h1></div>;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HelmetProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Router>
+              <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+                <Navbar />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/explore" element={<Explore />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/about" element={<AboutUs />} />
+                  <Route path="/contact" element={<ContactUs />} />
+                  
+                  {/* Auth Routes */}
+                  <Route path="/login/customer" element={<CustomerLogin />} />
+                  <Route path="/register/customer" element={<CustomerRegister />} />
+                  <Route path="/login/shopowner" element={<ShopOwnerLogin />} />
+                  <Route path="/register/shopowner" element={<ShopOwnerRegister />} />
+                  <Route path="/login/admin" element={<AdminLogin />} />
+                  <Route path="/secure-admin-portal" element={<SecureAdminLogin />} />
+                  
+                  {/* Dashboard Routes */}
+                  <Route path="/dashboard/customer" element={<ProtectedRoute allowedRoles={['customer']}><CustomerDashboard /></ProtectedRoute>} />
+                  <Route path="/shop/setup" element={<ProtectedRoute allowedRoles={['shopowner']}><ShopSetup /></ProtectedRoute>} />
+                  <Route path="/shop/dashboard" element={<ProtectedRoute allowedRoles={['shopowner']}><ShopDashboard /></ProtectedRoute>} />
+                  <Route path="/admin/dashboard" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><AdminDashboard /></ProtectedRoute>} />
+                  <Route path="/admin/chat" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><AdminChatDashboard /></ProtectedRoute>} />
+                  
+                  {/* Protected Routes */}
+                  <Route path="/profile" element={<ProtectedRoute allowedRoles={['customer']}><CustomerDashboard /></ProtectedRoute>} />
+                  <Route path="/my-orders" element={<ProtectedRoute allowedRoles={['customer']}><CustomerDashboard /></ProtectedRoute>} />
+                  <Route path="/my-subscriptions" element={<ProtectedRoute allowedRoles={['customer']}><CustomerDashboard /></ProtectedRoute>} />
+                  
+                  {/* Shop Routes */}
+                  <Route path="/shop/mess/:id" element={<MessPage />} />
+                  <Route path="/shop/hotel/:id" element={<HotelPage />} />
+                  <Route path="/shop/cafe/:id" element={<CafePage />} />
+                </Routes>
+                <ChatBox />
+                <Toaster position="bottom-center" reverseOrder={false} />
+              </div>
+            </Router>
+          </CartProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 
