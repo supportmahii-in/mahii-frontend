@@ -28,7 +28,6 @@ const SecureAdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [attempts, setAttempts] = useState(0);
   const [lockoutTime, setLockoutTime] = useState(null);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -49,7 +48,6 @@ const SecureAdminLogin = () => {
         clearInterval(interval);
         setLockoutTime(null);
         localStorage.removeItem('adminLockoutUntil');
-        setAttempts(0);
       }
     }, 1000);
 
@@ -82,16 +80,7 @@ const SecureAdminLogin = () => {
     } catch (err) {
       const message = err.response?.data?.message || 'Verification failed';
       setError(message);
-      setAttempts((prev) => {
-        const next = prev + 1;
-        if (next >= 5) {
-          const lockUntil = new Date(Date.now() + 15 * 60 * 1000);
-          localStorage.setItem('adminLockoutUntil', lockUntil);
-          setLockoutTime(lockUntil);
-          toast.error('Too many failed attempts. Try again in 15 minutes.');
-        }
-        return next;
-      });
+      toast.error(message);
     } finally {
       setLoading(false);
     }

@@ -8,9 +8,7 @@ import {
   Eye, 
   EyeOff,
   AlertCircle,
-  CheckCircle2,
-  Building2,
-  Shield
+  Building2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 

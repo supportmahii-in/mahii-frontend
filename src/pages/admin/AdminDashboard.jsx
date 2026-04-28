@@ -16,8 +16,6 @@ import {
   Check,
   X,
   Download,
-  Filter,
-  Calendar,
   BarChart3,
   Settings,
   LogOut,
@@ -44,7 +42,6 @@ const AdminDashboard = () => {
   const [pendingShops, setPendingShops] = useState([]);
   const [pendingShopOwners, setPendingShopOwners] = useState([]);
   const [recentUsers, setRecentUsers] = useState([]);
-  const [recentOrders, setRecentOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Function to fetch dashboard data
@@ -70,7 +67,6 @@ const AdminDashboard = () => {
       setPendingShops(data.pendingShopsDetails || []);
       setPendingShopOwners(data.pendingShopOwnersDetails || []);
       setRecentUsers(data.recentUsers || []);
-      setRecentOrders(data.recentOrders || []);
       
       console.log('State updated with pending shops count:', (data.pendingShopsDetails || []).length);
     } catch (error) {
