@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, Edit } from 'lucide-react';
+import { Edit } from 'lucide-react';
 
 const PendingEditStatus = ({ shop }) => {
   if (!shop || shop.isActive) return null;

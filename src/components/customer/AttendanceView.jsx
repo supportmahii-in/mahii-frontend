@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { QrCode, CheckCircle, Calendar, Clock, AlertCircle } from 'lucide-react';
 import { subscriptionAPI } from '../../services/api';
+import { listenToAttendance } from '../../config/firebase';
 import toast from 'react-hot-toast';
 
 const AttendanceView = ({ subscriptionId }) => {
@@ -12,6 +13,14 @@ const AttendanceView = ({ subscriptionId }) => {
   useEffect(() => {
     fetchSubscription();
     generateQRCode();
+
+    // Listen to real-time attendance updates
+    const unsubscribe = listenToAttendance(subscriptionId, (record) => {
+      toast.success(`Attendance marked for ${record.mealType}!`);
+      fetchSubscription(); // Refresh data when new attendance is recorded
+    });
+
+    return () => unsubscribe();
   }, [subscriptionId]);
 
   const fetchSubscription = async () => {

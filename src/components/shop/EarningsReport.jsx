@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DollarSign, TrendingUp, Calendar, Download, Filter, ChevronDown } from 'lucide-react';
 import { shopAPI } from '../../services/api';
 import toast from 'react-hot-toast';
