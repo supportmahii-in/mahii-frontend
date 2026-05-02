@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import Navbar from './components/common/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
 
@@ -77,6 +78,7 @@ function App() {
                 </Routes>
                 <ChatBox />
                 <Toaster position="bottom-center" reverseOrder={false} />
+                <SpeedInsights />
               </div>
             </Router>
           </CartProvider>
