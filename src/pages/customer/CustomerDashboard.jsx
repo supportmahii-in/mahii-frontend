@@ -22,10 +22,12 @@ import {
   Wallet,
   Heart,
   Share2,
-  Download
+  Download,
+  CalendarCheck
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import MealAttendanceCard from '../../components/customer/MealAttendanceCard';
 
 const CustomerDashboard = () => {
   const { user, logout } = useAuth();
@@ -104,6 +106,7 @@ const CustomerDashboard = () => {
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: Home },
+    { id: 'attendance', label: 'Attendance', icon: CalendarCheck },
     { id: 'orders', label: 'My Orders', icon: ShoppingBag, count: stats.totalOrders },
     { id: 'subscriptions', label: 'Subscriptions', icon: Calendar, count: stats.activeSubscriptions },
     { id: 'payments', label: 'Payments', icon: CreditCard },
@@ -299,6 +302,41 @@ const CustomerDashboard = () => {
                         </Link>
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {/* Attendance Tab */}
+                {activeTab === 'attendance' && (
+                  <div className="space-y-6">
+                    <div className="text-center mb-6">
+                      <h3 className="text-xl font-bold mb-2">Meal Attendance</h3>
+                      <p className="text-gray-600 dark:text-gray-400">Mark your attendance for breakfast, lunch, and dinner</p>
+                    </div>
+                    
+                    {/* Active Subscriptions for Attendance */}
+                    {subscriptions.filter(s => s.isActive).length > 0 ? (
+                      <div className="grid gap-6">
+                        {subscriptions.filter(s => s.isActive).map((sub) => (
+                          <MealAttendanceCard 
+                            key={sub._id} 
+                            subscription={sub} 
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-12">
+                        <CalendarCheck size={48} className="mx-auto text-gray-400 mb-4" />
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No Active Subscriptions</h4>
+                        <p className="text-gray-600 dark:text-gray-400 mb-4">You need an active subscription to mark attendance</p>
+                        <Link 
+                          to="/explore" 
+                          className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition"
+                        >
+                          <Utensils size={18} />
+                          Browse Messes
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 )}
 

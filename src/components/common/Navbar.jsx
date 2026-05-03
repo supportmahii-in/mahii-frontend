@@ -25,18 +25,24 @@ import {
   FiStar,
   FiBriefcase,
   FiShield,
-  FiUsers
+  FiUsers,
+  FiMapPin,
+  FiChevronDown,
+  FiTruck
 } from 'react-icons/fi';
 import { 
   MdRestaurant, 
   MdStorefront, 
   MdDashboard, 
   MdMessage,
-  MdLocalOffer 
+  MdLocalOffer,
+  MdLocationOn
 } from 'react-icons/md';
 import { FaUtensils, FaStore, FaCrown, FaRegGem, FaChartLine } from 'react-icons/fa';
 import { GiFoodChain, GiMeal, GiCoffeeCup, GiCakeSlice, GiFoodTruck } from 'react-icons/gi';
 import { LogIn, UserCircle, ShoppingBag, LayoutDashboard, Crown } from 'lucide-react';
+import axios from 'axios';
+import { userAPI } from '../../services/api';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -45,9 +51,101 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
+  const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [userStats, setUserStats] = useState({
+    totalOrders: 0,
+    activeSubscriptions: 0,
+    totalSaved: 0
+  });
+  const [loadingStats, setLoadingStats] = useState(false);
   
   const userMenuRef = useRef(null);
   const loginDropdownRef = useRef(null);
+  const locationRef = useRef(null);
+
+  // Fetch real user stats
+  useEffect(() => {
+    if (user) {
+      fetchUserStats();
+    }
+  }, [user]);
+
+  const fetchUserStats = async () => {
+    setLoadingStats(true);
+    try {
+      const response = await userAPI.getStats();
+      if (response.data.success) {
+        setUserStats({
+          totalOrders: response.data.totalOrders || 0,
+          activeSubscriptions: response.data.activeSubscriptions || 0,
+          totalSaved: response.data.totalSaved || 0
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching user stats:', error);
+      const cachedStats = localStorage.getItem('userStats');
+      if (cachedStats) {
+        setUserStats(JSON.parse(cachedStats));
+      }
+    } finally {
+      setLoadingStats(false);
+    }
+  };
+
+  // Get saved location from localStorage
+  useEffect(() => {
+    const savedLocation = localStorage.getItem('userLocation');
+    if (savedLocation) {
+      setSelectedLocation(JSON.parse(savedLocation));
+    } else {
+      // Try to get user's current location
+      getCurrentLocation();
+    }
+  }, []);
+
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          try {
+            const response = await axios.get(
+              `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=YOUR_API_KEY`
+            );
+            if (response.data.results[0]) {
+              const location = {
+                address: response.data.results[0].formatted,
+                lat: latitude,
+                lng: longitude
+              };
+              setSelectedLocation(location);
+              localStorage.setItem('userLocation', JSON.stringify(location));
+            }
+          } catch (error) {
+            console.error('Error getting location name:', error);
+          }
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
+          // Set default location
+          const defaultLocation = { address: 'Select Location', lat: null, lng: null };
+          setSelectedLocation(defaultLocation);
+        }
+      );
+    } else {
+      const defaultLocation = { address: 'Location Service Unavailable', lat: null, lng: null };
+      setSelectedLocation(defaultLocation);
+    }
+  };
+
+  const handleLocationSelect = (location) => {
+    setSelectedLocation(location);
+    setLocationDropdownOpen(false);
+    localStorage.setItem('userLocation', JSON.stringify(location));
+    // Emit location change event for other components
+    window.dispatchEvent(new CustomEvent('locationChanged', { detail: location }));
+  };
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -57,6 +155,9 @@ const Navbar = () => {
       }
       if (loginDropdownRef.current && !loginDropdownRef.current.contains(event.target)) {
         setLoginDropdownOpen(false);
+      }
+      if (locationRef.current && !locationRef.current.contains(event.target)) {
+        setLocationDropdownOpen(false);
       }
     };
 
@@ -115,10 +216,10 @@ const Navbar = () => {
     : '/login/customer';
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Explore', path: '/explore' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Home', path: '/',  },
+    { name: 'Explore', path: '/explore',  },
+    { name: 'About', path: '/about', },
+    { name: 'Contact', path: '/contact',  },
   ];
 
   const roleStats = {
@@ -150,26 +251,87 @@ const Navbar = () => {
 
   const currentRoleStats = roleStats[user?.role] || roleStats.customer;
 
+  // Popular locations for dropdown
+  const popularLocations = [
+    { address: 'Wakad, Pune', lat: 18.5905, lng: 73.7659 },
+    { address: 'Hinjewadi, Pune', lat: 18.5938, lng: 73.7394 },
+    { address: 'Chinchwad, Pune', lat: 18.6272, lng: 73.7926 },
+    { address: 'Baner, Pune', lat: 18.5568, lng: 73.7816 },
+    { address: 'Kothrud, Pune', lat: 18.5071, lng: 73.8091 }
+  ];
+
   return (
     <nav className="backdrop-blur-xl bg-white/90 dark:bg-gray-900/90 shadow-lg sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-700/50">
       <div className="container-custom">
         <div className="flex justify-between items-center h-16 lg:h-18">
 
           {/* Logo Section */}
-          <Link to="/" className="flex items-center gap-2.5 group">
+          <Link to="/" className="flex items-center gap-2.5 group shrink-0">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-[#C2185B] to-[#ad1457] rounded-xl blur-md opacity-60 group-hover:opacity-100 transition"></div>
               <div className="relative bg-gradient-to-br from-[#C2185B] to-[#ad1457] p-2.5 rounded-xl shadow-lg group-hover:scale-105 transition">
                 <GiFoodChain className="text-white text-xl" />
               </div>
             </div>
-            <div>
+            <div className="hidden sm:block">
               <span className="text-xl font-bold tracking-tight text-gray-800 dark:text-white">
                 Mah<span className="bg-gradient-to-r from-[#C2185B] to-[#ad1457] bg-clip-text text-transparent">ii</span>
               </span>
               <p className="text-[10px] text-gray-500 dark:text-gray-400 -mt-1 font-medium">Food Discovery Platform</p>
             </div>
           </Link>
+
+          {/* Location Selector - Desktop */}
+          <div className="hidden lg:block relative" ref={locationRef}>
+            <button
+              onClick={() => setLocationDropdownOpen(!locationDropdownOpen)}
+              className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition group max-w-[250px]"
+            >
+              <FiMapPin className="text-[#C2185B] text-lg shrink-0" />
+              <span className="text-sm text-gray-700 dark:text-gray-300 truncate">
+                {selectedLocation?.address || 'Select Location'}
+              </span>
+              <FiChevronDown className={`text-gray-400 text-sm transition-transform ${locationDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {locationDropdownOpen && (
+              <div className="absolute top-full left-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden">
+                <div className="p-4 bg-gradient-to-r from-[#C2185B]/5 to-[#ad1457]/5">
+                  <p className="font-semibold text-gray-900 dark:text-white">Delivery Location</p>
+                  <p className="text-xs text-gray-500 mt-1">Select your area for better recommendations</p>
+                </div>
+                
+                {/* Current Location Option */}
+                <button
+                  onClick={getCurrentLocation}
+                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition border-b border-gray-100 dark:border-gray-700"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                    <FiTruck className="text-blue-600" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className="font-medium text-gray-900 dark:text-white">Use Current Location</p>
+                    <p className="text-xs text-gray-500">Detect your current location</p>
+                  </div>
+                </button>
+
+                {/* Popular Locations */}
+                <div className="max-h-64 overflow-y-auto">
+                  <p className="text-xs font-semibold text-gray-500 px-4 pt-3 pb-1">POPULAR AREAS</p>
+                  {popularLocations.map((location, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleLocationSelect(location)}
+                      className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                    >
+                      <MdLocationOn className="text-gray-400" />
+                      <span className="text-sm text-gray-700 dark:text-gray-300">{location.address}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1">
@@ -231,7 +393,7 @@ const Navbar = () => {
                     <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full ring-2 ring-white dark:ring-gray-900"></div>
                   </div>
                   
-                  <div className="text-left">
+                  <div className="text-left hidden xl:block">
                     <p className="text-sm font-semibold text-gray-800 dark:text-white flex items-center gap-1">
                       {user.name.split(' ')[0]}
                       {user?.role === 'admin' && <Crown size={12} className="text-yellow-500" />}
@@ -269,23 +431,27 @@ const Navbar = () => {
                       </div>
                     </div>
 
-                    {/* Stats Section */}
-                    {user?.role === 'customer' && (
-                      <div className="grid grid-cols-3 gap-px bg-gray-100 dark:bg-gray-700">
-                        <div className="bg-white dark:bg-gray-800 p-3 text-center">
-                          <p className="text-lg font-bold text-[#C2185B]">12</p>
-                          <p className="text-xs text-gray-500">Orders</p>
-                        </div>
-                        <div className="bg-white dark:bg-gray-800 p-3 text-center">
-                          <p className="text-lg font-bold text-[#C2185B]">3</p>
-                          <p className="text-xs text-gray-500">Active Subs</p>
-                        </div>
-                        <div className="bg-white dark:bg-gray-800 p-3 text-center">
-                          <p className="text-lg font-bold text-[#C2185B]">₹2,450</p>
-                          <p className="text-xs text-gray-500">Saved</p>
-                        </div>
+                    {/* Stats Section - REAL DATA */}
+                    <div className="grid grid-cols-3 gap-px bg-gray-100 dark:bg-gray-700">
+                      <div className="bg-white dark:bg-gray-800 p-3 text-center">
+                        <p className="text-lg font-bold text-[#C2185B]">
+                          {loadingStats ? '...' : userStats.totalOrders}
+                        </p>
+                        <p className="text-xs text-gray-500">Total Orders</p>
                       </div>
-                    )}
+                      <div className="bg-white dark:bg-gray-800 p-3 text-center">
+                        <p className="text-lg font-bold text-[#C2185B]">
+                          {loadingStats ? '...' : userStats.activeSubscriptions}
+                        </p>
+                        <p className="text-xs text-gray-500">Active Subs</p>
+                      </div>
+                      <div className="bg-white dark:bg-gray-800 p-3 text-center">
+                        <p className="text-lg font-bold text-[#C2185B]">
+                          {loadingStats ? '...' : `₹${userStats.totalSaved}`}
+                        </p>
+                        <p className="text-xs text-gray-500">Total Saved</p>
+                      </div>
+                    </div>
 
                     {/* Menu Items */}
                     <div className="py-2">
@@ -358,7 +524,7 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              /* Login Dropdown - When Not Logged In */
+              /* Google-Style Login Button */
               <div className="relative" ref={loginDropdownRef}>
                 <button
                   onClick={() => setLoginDropdownOpen(!loginDropdownOpen)}
@@ -370,10 +536,34 @@ const Navbar = () => {
                 </button>
 
                 {loginDropdownOpen && (
-                  <div className="absolute right-0 mt-3 w-72 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden">
-                    <div className="p-5 bg-gradient-to-r from-[#C2185B]/5 to-[#ad1457]/5">
-                      <p className="font-semibold text-gray-900 dark:text-white">Welcome to Mahii!</p>
+                  <div className="absolute right-0 mt-3 w-80 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden animate-in slide-in-from-top-2 duration-200">
+                    <div className="p-5 text-center border-b border-gray-100 dark:border-gray-700">
+                      <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-r from-[#C2185B]/10 to-[#ad1457]/10 rounded-full flex items-center justify-center">
+                        <GiFoodChain className="text-3xl text-[#C2185B]" />
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">Welcome back</h3>
                       <p className="text-sm text-gray-500 mt-1">Sign in to continue your food journey</p>
+                    </div>
+                    
+                    {/* Google Sign In Button */}
+                    <button
+                      className="w-full flex items-center justify-center gap-3 px-4 py-3 m-2 w-[calc(100%-16px)] bg-white border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition shadow-sm"
+                      onClick={() => {
+                        // Implement Google Sign In
+                        window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
+                      }}
+                    >
+                      <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Continue with Google</span>
+                    </button>
+
+                    <div className="relative my-3">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
+                      </div>
+                      <div className="relative flex justify-center text-xs">
+                        <span className="px-2 bg-white dark:bg-gray-800 text-gray-500">or</span>
+                      </div>
                     </div>
                     
                     <Link
@@ -385,22 +575,8 @@ const Navbar = () => {
                         <GiMeal size={20} className="text-orange-600" />
                       </div>
                       <div>
-                        <p className="font-semibold text-gray-900 dark:text-white">Customer Login</p>
-                        <p className="text-xs text-gray-500">Order food & manage subscriptions</p>
-                      </div>
-                    </Link>
-                    
-                    <Link
-                      to="/login/shopowner"
-                      className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-                      onClick={() => setLoginDropdownOpen(false)}
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                        <MdStorefront size={20} className="text-emerald-600" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-900 dark:text-white">Business Login</p>
-                        <p className="text-xs text-gray-500">Manage your shop & earnings</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">Email Sign In</p>
+                        <p className="text-xs text-gray-500">Use your email & password</p>
                       </div>
                     </Link>
                     
@@ -416,7 +592,7 @@ const Navbar = () => {
                       </div>
                       <div>
                         <p className="font-semibold text-amber-600">Create Account</p>
-                        <p className="text-xs text-gray-500">Join as a foodie</p>
+                        <p className="text-xs text-gray-500">Join as a foodie for free</p>
                       </div>
                     </Link>
                     
@@ -453,6 +629,27 @@ const Navbar = () => {
         {mobileMenuOpen && (
           <div className="lg:hidden mt-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-5 space-y-3 border border-gray-100 dark:border-gray-700 max-h-[80vh] overflow-y-auto animate-in slide-in-from-top-2 duration-200">
 
+            {/* Mobile Location Selector */}
+            <div className="pb-4 mb-2 border-b border-gray-100 dark:border-gray-700">
+              <p className="text-xs text-gray-500 mb-2">DELIVERY LOCATION</p>
+              <div className="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                <FiMapPin className="text-[#C2185B]" />
+                <select 
+                  className="flex-1 bg-transparent text-sm text-gray-700 dark:text-gray-300 outline-none"
+                  value={selectedLocation?.address || ''}
+                  onChange={(e) => {
+                    const location = popularLocations.find(l => l.address === e.target.value);
+                    if (location) handleLocationSelect(location);
+                  }}
+                >
+                  <option value="">Select Location</option>
+                  {popularLocations.map((loc, idx) => (
+                    <option key={idx} value={loc.address}>{loc.address}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             {/* Mobile User Info when logged in */}
             {user && (
               <div className="flex items-center gap-4 pb-4 mb-2 border-b border-gray-100 dark:border-gray-700">
@@ -468,6 +665,24 @@ const Navbar = () => {
                     {getRoleBadge().icon}
                     {getRoleBadge().text}
                   </span>
+                </div>
+              </div>
+            )}
+
+            {/* Mobile Stats for logged in user */}
+            {user && (
+              <div className="grid grid-cols-3 gap-2 pb-4 mb-2 border-b border-gray-100 dark:border-gray-700">
+                <div className="text-center p-2 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <p className="text-lg font-bold text-[#C2185B]">{loadingStats ? '...' : userStats.totalOrders}</p>
+                  <p className="text-[10px] text-gray-500">Orders</p>
+                </div>
+                <div className="text-center p-2 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <p className="text-lg font-bold text-[#C2185B]">{loadingStats ? '...' : userStats.activeSubscriptions}</p>
+                  <p className="text-[10px] text-gray-500">Subscriptions</p>
+                </div>
+                <div className="text-center p-2 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <p className="text-lg font-bold text-[#C2185B]">{loadingStats ? '...' : `₹${userStats.totalSaved}`}</p>
+                  <p className="text-[10px] text-gray-500">Saved</p>
                 </div>
               </div>
             )}
@@ -511,6 +726,12 @@ const Navbar = () => {
                       {item.icon} {item.name}
                     </Link>
                   ))}
+                  <Link to="/settings" className="flex items-center gap-3 py-3 px-2" onClick={() => setMobileMenuOpen(false)}>
+                    <FiSettings size={18} /> Settings & Privacy
+                  </Link>
+                  <Link to="/help" className="flex items-center gap-3 py-3 px-2" onClick={() => setMobileMenuOpen(false)}>
+                    <FiHelpCircle size={18} /> Help Center
+                  </Link>
                   <button
                     onClick={() => {
                       logout();
@@ -523,11 +744,17 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
+                  <button
+                    onClick={() => {
+                      window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
+                    }}
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-white border border-gray-300 dark:border-gray-600 rounded-xl mb-2"
+                  >
+                    <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
+                    <span className="text-sm">Continue with Google</span>
+                  </button>
                   <Link to="/login/customer" className="flex items-center gap-3 py-3 px-2" onClick={() => setMobileMenuOpen(false)}>
-                    <GiMeal size={18} /> Customer Login
-                  </Link>
-                  <Link to="/login/shopowner" className="flex items-center gap-3 py-3 px-2" onClick={() => setMobileMenuOpen(false)}>
-                    <MdStorefront size={18} /> Business Login
+                    <GiMeal size={18} /> Email Login
                   </Link>
                   <hr className="my-2 border-gray-100 dark:border-gray-700" />
                   <Link to="/register/customer" className="flex items-center gap-3 py-3 px-2 text-amber-600" onClick={() => setMobileMenuOpen(false)}>

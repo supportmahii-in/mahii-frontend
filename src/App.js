@@ -31,6 +31,8 @@ import ShopDashboard from './pages/shopowner/ShopDashboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminChatDashboard from './pages/admin/AdminChatDashboard';
 import ShopSetup from './pages/shopowner/ShopSetup';
+import Settings from './pages/Settings';
+import HelpCenter from './pages/HelpCenter';
 import ChatBox from './components/common/ChatBox';
 
 // Placeholder for remaining pages (will create)
@@ -71,6 +73,8 @@ function App() {
                   <Route path="/profile" element={<ProtectedRoute allowedRoles={['customer']}><CustomerDashboard /></ProtectedRoute>} />
                   <Route path="/my-orders" element={<ProtectedRoute allowedRoles={['customer']}><CustomerDashboard /></ProtectedRoute>} />
                   <Route path="/my-subscriptions" element={<ProtectedRoute allowedRoles={['customer']}><CustomerDashboard /></ProtectedRoute>} />
+                  <Route path="/settings" element={<ProtectedRoute allowedRoles={['customer', 'shopowner', 'admin', 'super_admin']}><Settings /></ProtectedRoute>} />
+                  <Route path="/help" element={<HelpCenter />} />
                   
                   {/* Shop Routes */}
                   <Route path="/shop/mess/:id" element={<MessPage />} />

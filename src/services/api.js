@@ -55,6 +55,16 @@ export const authAPI = {
   getMe: () => api.get('/auth/me'),
 };
 
+// ============ USER APIS ============
+export const userAPI = {
+  getStats: () => api.get('/user/stats'),
+  getSettings: () => api.get('/user/settings'),
+  updateProfile: (data) => api.put('/user/profile', data),
+  updatePassword: (data) => api.put('/user/password', data),
+  updateNotifications: (data) => api.put('/user/notifications', data),
+  updatePrivacy: (data) => api.put('/user/privacy', data),
+};
+
 // ============ SHOP APIS ============
 export const shopAPI = {
   getNearbyShops: (params) => api.get('/shops/nearby', { params }),
@@ -135,10 +145,13 @@ export const subscriptionAPI = {
 
 // ============ ATTENDANCE APIS ============
 export const attendanceAPI = {
+  markAttendance: (data) => api.post('/attendance/mark', data),
+  getMyAttendance: (subscriptionId) => api.get(`/attendance/my/${subscriptionId}`),
+  getAnalytics: (shopId) => api.get(`/attendance/analytics/${shopId}`),
+  getAttendanceAnalytics: (params) => api.get('/attendance/analytics', { params }),
+  getAttendanceByDate: (params) => api.get('/attendance/by-date', { params }),
   generateQRCode: (subscriptionId) => api.get(`/attendance/qr/${subscriptionId}`),
   scanAttendance: (data) => api.post('/attendance/scan', data),
-  markManual: (data) => api.post('/attendance/manual', data),
-  markManualAttendance: (data) => api.post('/attendance/manual', data),
 };
 
 // ============ REVIEW APIS ============
@@ -166,6 +179,7 @@ export const notificationAPI = {
   deleteNotification: (id) => api.delete(`/notifications/${id}`),
   getPreferences: () => api.get('/notifications/preferences'),
   updatePreferences: (data) => api.put('/notifications/preferences', data),
+  sendSpecialDishNotification: (data) => api.post('/notifications/special-dish', data),
 };
 
 // ============ ADMIN APIS ============
