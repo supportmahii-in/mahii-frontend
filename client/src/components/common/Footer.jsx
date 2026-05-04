@@ -71,8 +71,12 @@ const Footer = () => {
             className="space-y-5"
           >
             <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-[#FF8A00] to-[#FF6A00] p-3 rounded-2xl shadow-lg">
-                <FaUtensils className="text-white text-xl" />
+              <div className="h-12 w-12 rounded-2xl shadow-lg">
+                <img
+                  src="/mahiilogo.png"
+                  alt="Mahii Logo"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div>
                 <h2 className="text-2xl font-bold tracking-wide text-[#1E1E1E]">

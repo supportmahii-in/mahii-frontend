@@ -309,11 +309,12 @@ const Navbar = () => {
 
           {/* Logo Section */}
           <Link to="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#C2185B] to-[#ad1457] rounded-xl blur-md opacity-60 group-hover:opacity-100 transition"></div>
-              <div className="relative bg-gradient-to-br from-[#C2185B] to-[#ad1457] p-2.5 rounded-xl shadow-lg group-hover:scale-105 transition">
-                <GiFoodChain className="text-white text-xl" />
-              </div>
+            <div className="relative h-12 w-12">
+              <img
+                src="/mahiilogo.png"
+                alt="Mahii Logo"
+                className="h-full w-full object-contain group-hover:scale-105 transition"
+              />
             </div>
             <div className="hidden sm:block">
               <span className="text-xl font-bold tracking-tight text-gray-800 dark:text-white">
