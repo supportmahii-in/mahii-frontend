@@ -32,62 +32,52 @@ const AboutUs = () => {
   const { scrollYProgress } = useScroll();
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
-  // Stats data
-  const stats = [
-    { value: "50K+", label: "Orders Completed", icon: Utensils },
-    { value: "200+", label: "Restaurant Partners", icon: Building2 },
-    { value: "10K+", label: "Happy Students", icon: Users },
-    { value: "15+", label: "Cities in India", icon: MapPin },
-  ];
+     // Stats data
+    const stats = [
+     { value: "50K+", label: "Orders Completed", icon: Utensils },
+     { value: "200+", label: "Restaurant Partners", icon: Building2 },
+     { value: "10K+", label: "Happy Students", icon: Users },
+     { value: "15+", label: "Cities in India", icon: MapPin },
+    ];
 
   // Journey timeline
   const journey = [
-    { year: "2024", title: "Launch of Mahii", description: "Started our journey to connect students with affordable food" },
-    { year: "2024", title: "Student Mess Subscription", description: "Introduced monthly mess plans with attendance tracking" },
-    { year: "2025", title: "Quick Commerce Integration", description: "Expanded to include cafes, hotels, and street food" }
-  ];
-
-  // Brand Director / Leadership Team
-  const leadershipTeam = [
-    {
-      name: "Om Jaunjal",
-      role: "Founder & Brand Director",
-      bio: "Visionary leader passionate about revolutionizing the student food experience. With a deep understanding of student needs and technology, Om is driving Mahii's mission to make quality food accessible to every student.",
-      image: "https://randomuser.me/api/portraits/men/1.jpg",
-      social: { linkedin: "#", twitter: "#" },
-      quote: "Food is not just nutrition; it's an experience that shapes a student's college life."
-    }
+    { year: "2026", title: "Launch soon", description: "Started our journey to connect students with affordable food" },
+      //{ year: "2024", title: "Student Mess Subscription", description: "Introduced monthly mess plans with attendance tracking" },
+    //{ year: "2025", title: "Quick Commerce Integration", description: "Expanded to include cafes, hotels, and street food" }
   ];
 
   // Management Team
   const managementTeam = [
     {
-      name: "Jay Gangapure",
-      role: "Head of Operations",
-      bio: "Expert in food tech operations with over 8 years of experience. Previously led operations at leading food delivery platforms. Jay ensures seamless coordination between restaurants, delivery partners, and customers.",
-      image: "https://randomuser.me/api/portraits/men/2.jpg",
-      social: { linkedin: "#", twitter: "#" }
+      name: "Om Junjal",
+      role: "Founder & CEO",
+      bio: "Cmputer science and Engineering Student",
+      image: "#",
+      social: { linkedin: " https://www.linkedin.com/in/om-jaunjal-8b2414306?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+         Instagram: " https://www.instagram.com/omjaunjal_?igsh=MXA1Z3I5dGl4dHM2bA==" }
     },
     {
-      name: "Aishwarya Patil",
+      name: "Karishma Jaunjalkar",
       role: "Chief Technology Officer",
-      bio: "Full-stack developer and food tech enthusiast. Aishwarya leads the technical team in building a robust, scalable platform that serves thousands of students daily.",
-      image: "https://randomuser.me/api/portraits/women/3.jpg",
-      social: { linkedin: "#", twitter: "#" }
+      bio: "Cmputer science and Engineering Student",
+      image: "#",
+      social: { linkedin: "#", Instagram: "#" }
     },
     {
-      name: "Priya Sharma",
+      name: "Jay Gangapure",
       role: "Head of Customer Success",
-      bio: "Dedicated to ensuring the best experience for every student. Priya manages customer support, feedback, and community engagement to build lasting relationships.",
-      image: "https://randomuser.me/api/portraits/women/4.jpg",
-      social: { linkedin: "#", twitter: "#" }
+      bio: "Cmputer science and Engineering Student",
+      image: "#",
+      social: { linkedin: "#", Instagram: "#" }
     },
     {
-      name: "Rahul Deshmukh",
-      role: "Head of Marketing",
-      bio: "Creative strategist with a passion for student engagement. Rahul leads brand initiatives, campaigns, and partnerships to expand Mahii's reach across campuses.",
-      image: "https://randomuser.me/api/portraits/men/5.jpg",
-      social: { linkedin: "#", twitter: "#" }
+      name: "Ayush Mane",
+      role: "CIO(Chief Information Officer)p",
+      bio: "Cmputer science and Engineering Student",
+      image: "#",
+      social: { linkedin: "https://www.linkedin.com/in/ayush-mane-6a7a6333b?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+         Instagram: " https://www.instagram.com/_ayush1803?igsh=YWsxd3cxNnNzcGJx" }
     }
   ];
 
@@ -137,11 +127,11 @@ const AboutUs = () => {
               </h1>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                 Mahii is a student-first convenience platform offering easy access to affordable 
-                food, mess subscriptions, and dining experiences through a unified app.
+                food, mess subscriptions, and dining experiences through a unified website.
               </p>
               <div className="mt-6 inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full">
                 <Calendar size={14} className="text-[#FF6B35]" />
-                <span className="text-sm text-gray-600">Launched - 2024</span>
+                <span className="text-sm text-gray-600">Launched Soon 2026</span>
               </div>
             </motion.div>
           </div>
@@ -162,7 +152,7 @@ const AboutUs = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-white">
+      {/* <section className="py-12 bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
@@ -176,10 +166,10 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Industry Pioneer Section */}
-      <section className="py-16 bg-gray-50">
+      {/*<section className="py-16 bg-gray-50">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -192,7 +182,7 @@ const AboutUs = () => {
               </h2>
               <p className="text-gray-600 leading-relaxed mb-6">
                 Mahii is a pioneer in the student food discovery space, launching the first 
-                integrated mess subscription platform in 2024. Due to our pioneering status, 
+                integrated mess subscription platform in 2026. Due to our pioneering status, 
                 we are well-recognized as a leader in student convenience, trusted by thousands 
                 of students across India.
               </p>
@@ -228,10 +218,10 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* The Mahii Journey */}
-      <section className="py-16 bg-white">
+      {/* <section className="py-16 bg-white">
         <div className="container-custom">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full mb-3">
@@ -264,58 +254,8 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* Brand Director Section - Similar to Swiggy's leadership */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full mb-3">
-              <Briefcase size={12} className="text-[#FF6B35]" />
-              <span className="text-xs font-medium text-[#FF6B35]">Leadership</span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Brand Director</h2>
-            <p className="text-gray-500 mt-2">The visionary behind Mahii's mission and growth</p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            {leadershipTeam.map((leader, index) => (
-              <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-lg">
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="relative h-80 md:h-full">
-                    <img
-                      src={leader.image}
-                      alt={leader.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="md:col-span-2 p-6 md:p-8">
-                    <div className="mb-2">
-                      <span className="text-xs text-[#FF6B35] font-medium">Founder & Brand Director</span>
-                      <h3 className="text-2xl font-bold text-gray-900 mt-1">{leader.name}</h3>
-                    </div>
-                    <p className="text-gray-600 leading-relaxed mb-4">{leader.bio}</p>
-                    {leader.quote && (
-                      <div className="bg-gray-50 rounded-xl p-4 mb-4 border-l-4 border-[#FF6B35]">
-                        <Quote size={16} className="text-[#FF6B35] mb-2" />
-                        <p className="text-gray-700 italic">"{leader.quote}"</p>
-                      </div>
-                    )}
-                    <div className="flex gap-3">
-                      <a href={leader.social.linkedin} className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
-                        <Linkedin size={14} />
-                      </a>
-                      <a href={leader.social.twitter} className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
-                        <Twitter size={14} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Management Team Section */}
       <section className="py-16 bg-white">
@@ -345,7 +285,7 @@ const AboutUs = () => {
                     <a href={member.social.linkedin} className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#FF6B35] hover:text-white transition">
                       <Linkedin size={14} />
                     </a>
-                    <a href={member.social.twitter} className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#FF6B35] hover:text-white transition">
+                    <a href={member.social.Instagram} className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#FF6B35] hover:text-white transition">
                       <Twitter size={14} />
                     </a>
                   </div>
@@ -382,7 +322,7 @@ const AboutUs = () => {
       </section>
 
       {/* Careers Section */}
-      <section className="py-16 bg-white">
+      {/* <section className="py-16 bg-white">
         <div className="container-custom">
           <div className="bg-gradient-to-r from-[#FF6B35]/10 to-[#FF6B35]/5 rounded-2xl p-8 md:p-12 text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
@@ -401,7 +341,7 @@ const AboutUs = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-16 bg-[#FF6B35]">

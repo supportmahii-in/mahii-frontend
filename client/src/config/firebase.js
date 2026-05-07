@@ -26,6 +26,7 @@ import {
   signOut,
   onAuthStateChanged
 } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Your Firebase config (from Firebase Console)
 const firebaseConfig = {
@@ -42,6 +43,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth(app);
+const firestore = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
 // ============ REAL-TIME ORDER FUNCTIONS ============
@@ -166,6 +168,7 @@ const sendMessage = async (chatId, message, senderId, senderName) => {
 
 export {
   database,
+  firestore,
   auth,
   // Auth functions
   signInWithPopup,

@@ -92,16 +92,6 @@ const ShopDashboard = () => {
     }
   };
 
-  // Mock notifications for demo
-  useEffect(() => {
-    setNotifications([
-      { id: 1, title: 'New Order', message: 'Order #ORD001 has been placed', time: '2 min ago', read: false },
-      { id: 2, title: 'Subscription Renewal', message: 'Student Mess Monthly plan renewed', time: '1 hour ago', read: false },
-    ]);
-  }, []);
-
-  const unreadCount = notifications.filter(n => !n.read).length;
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">

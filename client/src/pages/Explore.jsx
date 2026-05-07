@@ -473,7 +473,7 @@ const Explore = () => {
         )}
 
         {loading ? (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="bg-white rounded-xl h-56 animate-pulse">
                 <div className="h-32 bg-gray-100 rounded-t-xl"></div>
@@ -491,7 +491,7 @@ const Explore = () => {
             <button onClick={clearFilters} className="mt-3 text-[#FF6B35] text-sm">Clear filters</button>
           </div>
         ) : viewMode === 'grid' ? (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
             {shops.map((shop, index) => <ShopCard key={shop._id} shop={shop} index={index} />)}
           </div>
         ) : (

@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaUtensils,
-  FaFacebook,
   FaInstagram,
-  FaTwitter,
   FaYoutube,
+  FaLinkedin,
+  FaWhatsapp,
   FaMapMarkerAlt,
   FaPhone,
   FaEnvelope,
@@ -39,13 +39,6 @@ const Footer = () => {
     { name: 'Partner with Us', path: '/partner' },
     { name: 'Advertise', path: '/advertise' },
     { name: 'Merchant Support', path: '/merchant-support' },
-  ];
-
-  const socialIcons = [
-    { icon: FaFacebook, href: 'https://facebook.com/mahii.in' },
-    { icon: FaInstagram, href: 'https://instagram.com/mahii.in' },
-    { icon: FaTwitter, href: 'https://twitter.com/mahii_in' },
-    { icon: FaYoutube, href: 'https://youtube.com/@mahii' },
   ];
 
   return (
@@ -92,17 +85,38 @@ const Footer = () => {
             </p>
 
             <div className="flex gap-4 pt-3">
-              {socialIcons.map((social, i) => (
-                <a
-                  key={i}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-11 h-11 rounded-full bg-white border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:text-white hover:bg-gradient-to-br hover:from-[#FF8A00] hover:to-[#FF6A00] transition-all duration-300 hover:scale-110 shadow-sm"
-                >
-                  <social.icon size={18} />
-                </a>
-              ))}
+              <a
+                href="https://www.instagram.com/mahii.yourfriend?igsh=ajJoMHd4ZndkNHJy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:bg-gradient-to-r hover:from-[#FF8A00] hover:to-[#FF6A00] hover:text-white hover:scale-110 transition-all duration-300"
+              >
+                <FaInstagram size={18} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/mahii-ltd/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:bg-gradient-to-r hover:from-[#FF8A00] hover:to-[#FF6A00] hover:text-white hover:scale-110 transition-all duration-300"
+              >
+                <FaLinkedin size={18} />
+              </a>
+              <a
+                href="https://youtube.com/@mahii.yourfriend?si=naX8SsXZMyXVkkwv"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:bg-gradient-to-r hover:from-[#FF8A00] hover:to-[#FF6A00] hover:text-white hover:scale-110 transition-all duration-300"
+              >
+                <FaYoutube size={18} />
+              </a>
+              <a
+                href="https://whatsapp.com/channel/0029VbCkUixEgGfTHNV9Sm3z"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:bg-gradient-to-r hover:from-[#FF8A00] hover:to-[#FF6A00] hover:text-white hover:scale-110 transition-all duration-300"
+              >
+                <FaWhatsapp size={18} />
+              </a>
             </div>
           </motion.div>
 
@@ -226,7 +240,7 @@ const Footer = () => {
             </div>
             <div>
               <p className="text-xs text-[#6B7280] uppercase tracking-wide">Call Us</p>
-              <p className="text-sm font-medium text-[#1E1E1E]">+91 98765 43210</p>
+              <p className="text-sm font-medium text-[#1E1E1E]">+91 9699247384, +91 9209179770</p>
             </div>
           </div>
           <div className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border border-[#FFE6CC] hover:shadow-md transition">
@@ -235,7 +249,7 @@ const Footer = () => {
             </div>
             <div>
               <p className="text-xs text-[#6B7280] uppercase tracking-wide">Email Us</p>
-              <p className="text-sm font-medium text-[#1E1E1E]">hello@mahii.in</p>
+              <p className="text-sm font-medium text-[#1E1E1E]">helpcentermahii@gmail.com</p>
             </div>
           </div>
         </div>

@@ -18,7 +18,7 @@ import {
   Building2,
   Shield
 } from 'lucide-react';
-import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaWhatsapp } from 'react-icons/fa';
 import { contactAPI } from '../services/api';
 import Footer from '../components/common/Footer';
 import toast from 'react-hot-toast';
@@ -54,12 +54,12 @@ const ContactUs = () => {
     {
       icon: Phone,
       title: "Call Us",
-      details: ["+91 98765 43210", "+91 87654 32109"],
+      details: ["+91 9699247384", "+91 9209179770"],
     },
     {
       icon: Mail,
       title: "Email Us",
-      details: ["support@mahii.com", "partners@mahii.com"],
+      details: ["helpcentermahii@gmail.com"],
     },
     {
       icon: Clock,
@@ -231,7 +231,7 @@ const ContactUs = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-[#FF6B35] focus:ring-1 focus:ring-[#FF6B35] transition"
-                        placeholder="9876543210"
+                        placeholder="9699247384"
                       />
                     </div>
                   </div>
@@ -294,7 +294,7 @@ const ContactUs = () => {
               <div className="bg-white rounded-xl overflow-hidden shadow-sm">
                 <div className="p-4 border-b border-gray-100">
                   <h3 className="font-semibold text-gray-800">Our Location</h3>
-                  <p className="text-sm text-gray-500">Visit our office in Pune</p>
+                  <p className="text-sm text-gray-500">Visit our office in Kolhapur </p>
                 </div>
                 <div className="h-56 w-full">
                   <iframe
@@ -314,20 +314,17 @@ const ContactUs = () => {
               <div className="bg-white rounded-xl p-5 shadow-sm">
                 <h3 className="font-semibold text-gray-800 mb-3">Connect With Us</h3>
                 <div className="flex gap-3">
-                  <a href="https://www.facebook.com/mahii" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
-                    <FaFacebook size={18} />
-                  </a>
-                  <a href="https://www.instagram.com/mahii" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
+                  <a href="https://www.instagram.com/mahii.yourfriend?igsh=ajJoMHd4ZndkNHJy" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
                     <FaInstagram size={18} />
                   </a>
-                  <a href="https://www.twitter.com/mahii" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
-                    <FaTwitter size={18} />
-                  </a>
-                  <a href="https://www.linkedin.com/company/mahii" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
+                  <a href="https://www.linkedin.com/in/mahii-ltd/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
                     <FaLinkedin size={18} />
                   </a>
-                  <a href="https://www.youtube.com/mahii" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
+                  <a href="https://youtube.com/@mahii.yourfriend?si=naX8SsXZMyXVkkwv" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
                     <FaYoutube size={18} />
+                  </a>
+                  <a href="https://whatsapp.com/channel/0029VbCkUixEgGfTHNV9Sm3z" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-[#FF6B35] hover:text-white transition">
+                    <FaWhatsapp size={18} />
                   </a>
                 </div>
               </div>
@@ -340,7 +337,7 @@ const ContactUs = () => {
                     <h3 className="font-semibold">WhatsApp Support</h3>
                     <p className="text-sm opacity-90">Chat with us on WhatsApp</p>
                     <a 
-                      href="https://wa.me/919876543210" 
+                      href="https://wa.me/919699247384" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="inline-block mt-2 bg-white text-[#25D366] px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-100 transition"

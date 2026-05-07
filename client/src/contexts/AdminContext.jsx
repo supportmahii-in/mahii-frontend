@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { database } from '../config/firebase';
+import { firestore } from '../config/firebase';
 import { collection, query, where, onSnapshot, orderBy, limit } from 'firebase/firestore';
 
 const AdminContext = createContext();
@@ -13,7 +13,7 @@ export const AdminProvider = ({ children }) => {
 
   // Listen to real-time orders
   useEffect(() => {
-    const ordersQuery = query(collection(database, 'orders'), orderBy('createdAt', 'desc'), limit(50));
+    const ordersQuery = query(collection(firestore, 'orders'), orderBy('createdAt', 'desc'), limit(50));
     const unsubscribe = onSnapshot(ordersQuery, (snapshot) => {
       const orders = [];
       snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
@@ -24,7 +24,7 @@ export const AdminProvider = ({ children }) => {
 
   // Listen to real-time users
   useEffect(() => {
-    const usersQuery = query(collection(database, 'users'), orderBy('createdAt', 'desc'), limit(20));
+    const usersQuery = query(collection(firestore, 'users'), orderBy('createdAt', 'desc'), limit(100));
     const unsubscribe = onSnapshot(usersQuery, (snapshot) => {
       const users = [];
       snapshot.forEach(doc => users.push({ id: doc.id, ...doc.data() }));

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import ShopSidebar from './components/layout/ShopSidebar';
 import ShopHeader from './components/layout/ShopHeader';
 import { useAuth } from '../../contexts/AuthContext';
-import { shopAPI } from '../../services/api';
+import { shopAPI, notificationAPI } from '../../services/api';
 
 const ShopLayout = ({ children }) => {
   const location = useLocation();
@@ -30,26 +30,26 @@ const ShopLayout = ({ children }) => {
 
   const activeTab = getActiveTab();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchShopData = async () => {
       if (user?.role === 'shopowner') {
         try {
           const shopsRes = await shopAPI.getMyShops();
           const userShop = shopsRes.data.shops?.[0];
           setShop(userShop);
+
+          const notificationsRes = await notificationAPI.getNotifications({ page: 1, limit: 20 });
+          setNotifications((notificationsRes.data.notifications || []).map((notification) => ({
+            ...notification,
+            time: new Date(notification.createdAt).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }),
+          })));
         } catch (error) {
-          console.error('Error fetching shop data:', error);
+          console.error('Error fetching shop data or notifications:', error);
         }
       }
     };
 
     fetchShopData();
-
-    // Mock notifications
-    setNotifications([
-      { id: 1, title: 'New Order', message: 'Order #ORD001 has been placed', time: '2 min ago', read: false },
-      { id: 2, title: 'Subscription Renewal', message: 'Student Mess Monthly plan renewed', time: '1 hour ago', read: false },
-    ]);
   }, [user]);
 
   const unreadCount = notifications.filter(n => !n.read).length;

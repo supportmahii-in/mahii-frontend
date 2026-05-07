@@ -256,7 +256,7 @@ const HelpCenter = () => {
               </div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Email Support</h3>
               <p className="text-sm text-gray-500 mb-3">Get response within 24 hours</p>
-              <a href="mailto:support@mahii.in" className="text-[#C2185B] font-medium hover:underline">support@mahii.in →</a>
+              <a href="mailto:helpcentermahii@gmail.com" className="text-[#C2185B] font-medium hover:underline">helpcentermahii@gmail.com →</a>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-[#C2185B]/10 rounded-full flex items-center justify-center mx-auto mb-4">

@@ -21,7 +21,7 @@ const Home = () => {
   const [recentSearches, setRecentSearches] = useState([]);
   const [trendingSearches] = useState([
     "Mess near me",
-    "Best cafe in Pune",
+    "Best cafe in Kolhapur",
     "Budget meals",
     "Pure veg restaurant",
     "Student mess subscription"
@@ -178,7 +178,7 @@ const Home = () => {
       image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
     },
     {
-      name: "Spicy Chicken Burger",
+      name: "Spicy Burger",
       rating: "4.7",
       price: "₹149",
       image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop",
@@ -193,22 +193,22 @@ const Home = () => {
 
   const popularNearYou = [
     {
-      name: "Royal Spice Hotel",
+      name: "Shree Mess",
       rating: "4.6",
-      location: "Wakad, Pune",
-      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop",
+      location: "near KIT College",
+      image: "/images/Popular Near You/shree mess.png",
     },
     {
-      name: "Cafe BrewTime",
+      name: "Biotech canteen",
       rating: "4.5",
-      location: "Hinjewadi",
-      image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=400&h=300&fit=crop",
+      location: "near KIT College",
+      image: "/images/Popular Near You/Biotech.jpeg",
     },
     {
-      name: "Student Mess Hub",
+      name: "EPH Cafe",
       rating: "4.7",
-      location: "Chinchwad",
-      image: "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=400&h=300&fit=crop",
+      location: "KIT College Road",
+      image: "/images/Popular Near You/Eph.jpeg",
     },
   ];
 
@@ -224,7 +224,7 @@ const Home = () => {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl font-extrabold leading-tight text-[#1E1E1E]"
           >
-            Discover & Order <br className="hidden md:block" />
+            Discover <br className="hidden md:block" />
             <span className="bg-gradient-to-r from-[#FF8A00] to-[#FF6A00] bg-clip-text text-transparent">
               Delicious Food Near You
             </span>
@@ -376,16 +376,38 @@ const Home = () => {
 
             {/* Social Icons */}
             <div className="flex gap-4">
-              {[FaInstagram, FaLinkedinIn, FaYoutube, FaWhatsapp].map(
-                (Icon, i) => (
-                  <div
-                    key={i}
-                    className="w-12 h-12 rounded-full bg-white shadow-md border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:bg-gradient-to-r hover:from-[#FF8A00] hover:to-[#FF6A00] hover:text-white hover:scale-110 transition-all duration-300 cursor-pointer"
-                  >
-                    <Icon size={18} />
-                  </div>
-                )
-              )}
+              <a
+                href="https://www.instagram.com/mahii.yourfriend?igsh=ajJoMHd4ZndkNHJy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:bg-gradient-to-r hover:from-[#FF8A00] hover:to-[#FF6A00] hover:text-white hover:scale-110 transition-all duration-300"
+              >
+                <FaInstagram size={18} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/mahii-ltd/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:bg-gradient-to-r hover:from-[#FF8A00] hover:to-[#FF6A00] hover:text-white hover:scale-110 transition-all duration-300"
+              >
+                <FaLinkedinIn size={18} />
+              </a>
+              <a
+                href="https://youtube.com/@mahii.yourfriend?si=naX8SsXZMyXVkkwv"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:bg-gradient-to-r hover:from-[#FF8A00] hover:to-[#FF6A00] hover:text-white hover:scale-110 transition-all duration-300"
+              >
+                <FaYoutube size={18} />
+              </a>
+              <a
+                href="https://whatsapp.com/channel/0029VbCkUixEgGfTHNV9Sm3z"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-[#FFE6CC] flex items-center justify-center text-[#6B7280] hover:bg-gradient-to-r hover:from-[#FF8A00] hover:to-[#FF6A00] hover:text-white hover:scale-110 transition-all duration-300"
+              >
+                <FaWhatsapp size={18} />
+              </a>
             </div>
           </div>
         </div>
@@ -535,9 +557,9 @@ const Home = () => {
                     <FiMapPin size={15} />
                     {place.location}
                   </p>
-                  <p className="text-sm mt-4">
+                  {/* <p className="text-sm mt-4">
                     ⭐ <span className="text-[#FFA41C]">{place.rating}</span>
-                  </p>
+                  </p>*/}
                 </div>
               </motion.div>
             ))}

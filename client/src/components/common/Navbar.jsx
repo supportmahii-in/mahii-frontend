@@ -309,16 +309,16 @@ const Navbar = () => {
 
           {/* Logo Section */}
           <Link to="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="relative h-12 w-12">
+            <div className="relative h-12 w-12 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700">
               <img
-                src="/mahiilogo.png"
-                alt="Mahii Logo"
-                className="h-full w-full object-contain group-hover:scale-105 transition"
+                src="/mahii1logo.jpeg"
+                alt="Mahii1 Logo"
+                className="h-full w-full object-cover group-hover:scale-105 transition"
               />
             </div>
-            <div className="hidden sm:block">
+            <div>
               <span className="text-xl font-bold tracking-tight text-gray-800 dark:text-white">
-                Mah<span className="bg-gradient-to-r from-[#C2185B] to-[#ad1457] bg-clip-text text-transparent">ii</span>
+                mahii-<span className="bg-gradient-to-r from-[#C2185B] to-[#ad1457] bg-clip-text text-transparent">yourfriend</span>
               </span>
               <p className="text-[10px] text-gray-500 dark:text-gray-400 -mt-1 font-medium">Food Discovery Platform</p>
             </div>
