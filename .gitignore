@@ -2,12 +2,9 @@
 /client/node_modules
 /server/node_modules
 /.vercel
+/client/.vercel
+/client/build
+/server/build
 /build
 /server/
-gh_repo/
-docs/
-*.md
-README.md
-package-lock.json
-client/package-lock.json
 .env
